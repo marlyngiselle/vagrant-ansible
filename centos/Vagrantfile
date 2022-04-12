@@ -1,0 +1,24 @@
+Vagrant.configure("2") do |config|
+
+    config.ssh.insert_key = false
+    config.ssh.private_key_path = ["C:/Users/Giselle Da Costa/.ssh/id_rsa", "C:/Users/Giselle Da Costa/.vagrant.d/insecure_private_key"]
+    config.vm.provision "file", source: "C:/Users/Giselle Da Costa/.ssh/id_rsa.pub", destination: "/home/vagrant/.ssh/authorized_keys"
+  
+    config.vm.network "private_network", ip: "192.168.40.30"
+  
+    config.vm.box = "centos/8"
+    config.vm.hostname = "centos"
+    config.vm.box_check_update = true
+    
+  
+    config.vm.provider "virtualbox" do |vb|
+      vb.name = "centos-8"
+      vb.memory = 2048
+      vb.cpus = 2
+      vb.gui = true
+      vb.check_guest_additions = false
+    end
+
+    config.vm.provision "shell", path: "comandos.sh"
+    
+end  
